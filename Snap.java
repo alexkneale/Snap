@@ -48,6 +48,7 @@ public class Snap extends CardGame {
             // check that we haven't gotten through deck
             if (getDeck().size() == 0) {
                 gamePlaying = false;
+
             }
 
         }
@@ -151,8 +152,8 @@ public class Snap extends CardGame {
 
             // check that we haven't gotten through deck
             if (getDeck().size() == 0) {
-                System.out.println("Out of cards! Game over floks");
-                gamePlaying = false;
+                System.out.println("Out of cards! New Game!");
+                newDeck();
             }
 
         }
