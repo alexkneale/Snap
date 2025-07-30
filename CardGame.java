@@ -21,6 +21,7 @@ public class CardGame {
         }
     }
 
+    // function to create a brand new shuffled deck
     public void newDeck() {
         for (Suit suit: Suit.values()) {
             for (Rank rank : Rank.values()) {
@@ -34,20 +35,24 @@ public class CardGame {
 
         return deckOfCards;
     }
+
+    // name of card game
     public String getName() {
         return name;
     }
 
+    // method to return and remove top card in deck
     public Card dealCard() {
         Card removedCard = deckOfCards.remove(0);
         return removedCard;
     }
 
+    // method to sort deck in number order
     public ArrayList<Card> sortDeckInNumberOrder() {
         Collections.sort(deckOfCards, Comparator.comparingInt(Card::getValue));
         return deckOfCards;
     }
-
+    // method to sort deck in suit order, then value order
     public ArrayList<Card> sortDeckIntoSuits() {
         deckOfCards.sort(
                 Comparator.comparing(Card::getSuit)
@@ -55,7 +60,7 @@ public class CardGame {
         );
         return deckOfCards;
     }
-
+    // method to randomly shuffle deck of cards
     public ArrayList<Card> shuffleDeck() {
         Collections.shuffle(deckOfCards);
         return deckOfCards;

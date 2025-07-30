@@ -11,6 +11,7 @@ public class Snap extends CardGame {
         super(name);
     }
 
+    //method for playing game, without players (only one "player", in terminal)
     public void playGame() {
 
         // shuffle cards
@@ -27,7 +28,7 @@ public class Snap extends CardGame {
         Card previousCard = dealCard();
         System.out.println(previousCard);
 
-        //
+        // until there's a snap
         while (gamePlaying) {
             // get new card
 
@@ -47,7 +48,8 @@ public class Snap extends CardGame {
 
             // check that we haven't gotten through deck
             if (getDeck().size() == 0) {
-                gamePlaying = false;
+                System.out.println("Out of cards! New Game!");
+                newDeck();
 
             }
 
@@ -55,13 +57,6 @@ public class Snap extends CardGame {
 
     }
     public void playGame(Player player1, Player player2) {
-
-
-
-        // does game take two Players as input?
-        // does it extend Snap?
-        // from my perspective, it's the same as Snap, except we now
-        // include opportunity for user to input
 
         // shuffle cards
         shuffleDeck();
@@ -71,7 +66,7 @@ public class Snap extends CardGame {
         // boolean for while loop
         boolean gamePlaying = true;
 
-        // current player
+        // list of players, to switch between names in while loop
         ArrayList<Player> players = new ArrayList<Player>(Arrays.asList(player1, player2));
         // round counter, for player switching
         int countRounds = 0;
@@ -83,15 +78,14 @@ public class Snap extends CardGame {
         Card previousCard = dealCard();
         System.out.println(previousCard);
 
-        //
+        // until there's a winner
         while (gamePlaying) {
-            // switch current player
+            // switch current player, displaying name
             currentPlayer = players.get(countRounds%2);
             System.out.println(currentPlayer.getNameUser() + " turn");
 
 
             // get new card
-
             ourScanner.nextLine();
             Card currentCard = dealCard();
             System.out.println(currentCard);
@@ -114,9 +108,9 @@ public class Snap extends CardGame {
                 Future<String> future = executor.submit(inputTask);
 
                 try {
-                    // try to get the result of the task within 5 seconds
-                    String input = future.get(5, TimeUnit.SECONDS);
-
+                    // try to get the result of the task within 2 seconds
+                    String input = future.get(2, TimeUnit.SECONDS);
+                    // only win if user types snap
                     if (input.equals("snap")) {
                         System.out.println(currentPlayer.getNameUser()+" wins!");
                         gamePlaying = false;
@@ -126,21 +120,21 @@ public class Snap extends CardGame {
                     }
 
                 } catch (TimeoutException e) {
-                    // if 5 seconds pass with no input, this block runs
+                    // if 2 seconds pass with no input, this block runs
                     System.out.println("Too late! " +currentPlayer.getNameUser()+" didn't type anything in time.");
 
-                    // Cancel the task since we don't need it anymore
+                    // cancel the task since we don't need it anymore
                     future.cancel(true);
                 } catch (Exception e) {
-                    // Catch any other exceptions (e.g., InterruptedException, ExecutionException)
+                    // catch any other exceptions (e.g., InterruptedException, ExecutionException)
                     System.out.println("Error: " + e.getMessage());
 
 
                 }
 
-                // Shut down the executor and stop its thread
+                // shut down the executor and stop its thread
                 executor.shutdownNow();
-                // Clear leftover newline from input buffer
+                // clear leftover newline from input buffer
                 if (ourScanner.hasNextLine()) {
                     ourScanner.nextLine();
                 }

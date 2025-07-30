@@ -8,6 +8,7 @@ public class Card {
     private final Suit suit;
     private final Rank rank;
 
+    // constructors
     public Card() {
         this(Suit.CLUBS, Rank.TWO);
     }
@@ -15,6 +16,7 @@ public class Card {
         this.suit = suit;
         this.rank = rank;
     }
+    // getters
 
     public String getSuit() {
         return this.suit.getSymbol();
@@ -28,6 +30,7 @@ public class Card {
         return this.rank.getValue();
     }
 
+    // to string method for printing card
     @Override
     public String toString() {
         return rank.getSymbol() + suit.getSymbol();

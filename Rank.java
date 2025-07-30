@@ -1,6 +1,7 @@
 package org.example.SnapProject;
 
 public enum Rank {
+    // rank includes symbol and value
 
     TWO("2", 2),
     THREE("3", 3),
